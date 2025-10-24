@@ -29,6 +29,14 @@ public class ClienteManager {
 
     }
 
+    // EJERCICIO 1: Listar todos los clientes
+    public List<Cliente> getAllClientes(){
+        String jpql = "SELECT c FROM Cliente c";
+        Query query = em.createQuery(jpql);
+        List<Cliente> clientes = query.getResultList();
+        return clientes;
+    }
+
     public List<Cliente> getClientesXIds(List<Long> idsClientes){
         String jpql = "FROM Cliente WHERE id IN (:idsClientes) ORDER BY razonSocial ASC";
         Query query = em.createQuery(jpql);

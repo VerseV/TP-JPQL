@@ -28,6 +28,39 @@ public class MainConsultasJPQL {
         //buscarClientesXRazonSocialParcial();
     }
 
+    // EJERCICIO 1: Listar todos los clientes
+    public static void ejercicio1ListarTodosLosClientes(){
+        ClienteManager mCliente = new ClienteManager(true);
+        try {
+            System.out.println("=== EJERCICIO 1: Todos los Clientes ===");
+            List<Cliente> clientes = mCliente.getAllClientes();
+            for(Cliente cli : clientes){
+                System.out.println("ID: " + cli.getId());
+                System.out.println("CUIT: " + cli.getCuit());
+                System.out.println("Razón Social: " + cli.getRazonSocial());
+                System.out.println("-----------------");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mCliente.cerrarEntityManager();
+        }
+    }
+
+    // EJERCICIO 2: Listar todas las facturas generadas en el último mes
+    public static void ejercicio2FacturasUltimoMes(){
+        FacturaManager mFactura = new FacturaManager(true);
+        try {
+            System.out.println("=== EJERCICIO 2: Facturas del Último Mes ===");
+            List<Factura> facturas = mFactura.getFacturasUltimoMes();
+            mostrarFacturas(facturas);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mFactura.cerrarEntityManager();
+        }
+    }
+
 
     public static void buscarFacturas(){
         FacturaManager mFactura = new FacturaManager(true);

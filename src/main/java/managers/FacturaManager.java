@@ -28,6 +28,21 @@ public class FacturaManager {
 
     }
 
+    // EJERCICIO 2: Listar todas las facturas generadas en el último mes
+    public List<Factura> getFacturasUltimoMes(){
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaHaceUnMes = fechaActual.minusMonths(1);
+
+        String jpql = "SELECT f FROM Factura f " +
+                "WHERE f.fechaComprobante >= :fechaInicio " +
+                "ORDER BY f.fechaComprobante DESC";
+        Query query = em.createQuery(jpql);
+        query.setParameter("fechaInicio", fechaHaceUnMes);
+
+        List<Factura> facturas = query.getResultList();
+        return facturas;
+    }
+
     public List<Factura> getFacturas(){
         String jpql = "FROM Factura";
         Query query = em.createQuery(jpql);
