@@ -147,6 +147,30 @@ public class FacturaManager {
         return resultados;
     }
 
+    //EJERCICIO 5: Obtener las facturas de un cliente emitidas en los ultimos 3 meses
+    public List<Factura> getFacturasClienteUltimos3Meses(Long idCliente){
+        LocalDate fecha3Meses= LocalDate.now().minusMonths(3);
+        String jpql = "SELECT f FROM factura WHERE f.cliente.id = :idCliente AND f.fechaComprobante >= :fecha3Meses";
+
+        Query query = em.createQuery(jpql);
+        query.setParameter("idCliente", idCliente);
+        query.setParameter("fecha3Meses", fecha3Meses);
+
+        List<Factura> facturas = query.getResultList();
+        return facturas;
+    }
+
+    //EJERCICIO 6: Calcular el total facturado por un cliente
+    public Double getTotalFacturadoPorCliente(Long idCliente){
+        String jpql = "SELECT SUM(f.total) FROM Factura f WHERE f.cliente.id = :idCliente AND f.fechaBaja IS NULL";
+
+        Query query = em.createQuery(jpql);
+        query.setParameter("idCliente", idCliente);
+
+        Double total= (Double) query.getSingleResult();
+        return (total != null) ? total : 0.0;
+    }
+
     public void cerrarEntityManager(){
         em.close();
         emf.close();
