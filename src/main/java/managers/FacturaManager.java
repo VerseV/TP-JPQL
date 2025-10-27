@@ -126,6 +126,27 @@ public class FacturaManager {
         return maxNroFactura;
     }
 
+    // EJERCICIO 3: Obtener el cliente que ha generado más facturas
+    public org.example.Cliente getClienteConMasFacturas(){
+        Query query = em.createQuery("SELECT f.cliente FROM Factura f WHERE f.fechaBaja IS NULL " +
+                "GROUP BY f.cliente " +
+                "ORDER BY COUNT(f) DESC");
+        query.setMaxResults(1);
+
+        org.example.Cliente cliente = (org.example.Cliente) query.getSingleResult();
+        return cliente;
+    }
+
+    // EJERCICIO 4: Listar los artículos más vendidos
+    public List<Object[]> getArticulosMasVendidos(){
+        Query query = em.createQuery("SELECT fd.articulo, SUM(fd.cantidad) as cantidadVendida FROM FacturaDetalle fd " +
+                "GROUP BY fd.articulo " +
+                "ORDER BY cantidadVendida DESC");
+
+        List<Object[]> resultados = query.getResultList();
+        return resultados;
+    }
+
     public void cerrarEntityManager(){
         em.close();
         emf.close();

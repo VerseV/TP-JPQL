@@ -61,6 +61,43 @@ public class MainConsultasJPQL {
         }
     }
 
+    // EJERCICIO 3: Obtener el cliente que ha generado más facturas
+    public static void ejercicio3ClienteConMasFacturas(){
+        FacturaManager mFactura = new FacturaManager(true);
+        try {
+            System.out.println("=== EJERCICIO 3: Cliente con Más Facturas ===");
+            Cliente cliente = mFactura.getClienteConMasFacturas();
+            System.out.println("ID: " + cliente.getId());
+            System.out.println("CUIT: " + cliente.getCuit());
+            System.out.println("Razón Social: " + cliente.getRazonSocial());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mFactura.cerrarEntityManager();
+        }
+    }
+
+    // EJERCICIO 4: Listar los artículos más vendidos
+    public static void ejercicio4ArticulosMasVendidos(){
+        FacturaManager mFactura = new FacturaManager(true);
+        try {
+            System.out.println("=== EJERCICIO 4: Artículos Más Vendidos ===");
+            List<Object[]> resultados = mFactura.getArticulosMasVendidos();
+            for(Object[] resultado : resultados){
+                Articulo articulo = (Articulo) resultado[0];
+                Double cantidadVendida = (Double) resultado[1];
+                System.out.println("Artículo: " + articulo.getDenominacion());
+                System.out.println("Código: " + articulo.getCodigo());
+                System.out.println("Cantidad Total Vendida: " + cantidadVendida);
+                System.out.println("-----------------");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mFactura.cerrarEntityManager();
+        }
+    }
+
 
     public static void buscarFacturas(){
         FacturaManager mFactura = new FacturaManager(true);
