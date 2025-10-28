@@ -34,7 +34,7 @@ public class MainConsultasJPQL {
         //ejercicio12ArticulosPorCodigoParcial("A01");
         //ejercicio13ArticulosPrecioMayorAlPromedio();
         //ejercicio14ClientesConFacturasEXISTS();
-        
+
     }
 
     // EJERCICIO 1: Listar todos los clientes
@@ -306,20 +306,20 @@ public class MainConsultasJPQL {
         mostrarFacturas(facturas);
     }
 
-    public static void mostrarFacturas(List<Factura> facturas){
-        for(Factura fact : facturas){
+    public static void mostrarFacturas(List<Factura> facturas) {
+        for (Factura fact : facturas) {
             System.out.println("N° Comp: " + fact.getStrProVentaNroComprobante());
             System.out.println("Fecha: " + FuncionApp.formatLocalDateToString(fact.getFechaComprobante()));
             System.out.println("CUIT Cliente: " + FuncionApp.formatCuitConGuiones(fact.getCliente().getCuit()));
-            System.out.println("Cliente: " + fact.getCliente().getRazonSocial() + " ("+fact.getCliente().getId() + ")");
+            System.out.println("Cliente: " + fact.getCliente().getRazonSocial() + " (" + fact.getCliente().getId() + ")");
             System.out.println("------Articulos------");
-            for(FacturaDetalle detalle : fact.getDetallesFactura()){
+            for (FacturaDetalle detalle : fact.getDetallesFactura()) {
                 System.out.println(detalle.getArticulo().getDenominacion() + ", " + detalle.getCantidad() + " unidades, $" + FuncionApp.getFormatMilDecimal(detalle.getSubTotal(), 2));
             }
-            System.out.println("Total: $" + FuncionApp.getFormatMilDecimal(fact.getTotal(),2));
+            System.out.println("Total: $" + FuncionApp.getFormatMilDecimal(fact.getTotal(), 2));
             System.out.println("*************************");
         }
-
+    }
         // EJERCICIO 7: Listar los Artículos vendidos en una factura
         public static void ejercicio7ArticulosPorFactura(Long idFactura) {
             FacturaManager mFactura = new FacturaManager(true);
