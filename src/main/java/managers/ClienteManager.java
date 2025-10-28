@@ -95,5 +95,20 @@ public class ClienteManager {
         }
 
         return "";
+
+        // EJERCICIO 14: Ejemplo de EXISTS - Clientes con al menos una factura
+        public List<org.example.Cliente> getClientesConFacturasUsandoExists() {
+            // Seleccionamos clientes (c) donde EXISTA...
+            String jpql = "SELECT c FROM Cliente c " +
+                    "WHERE EXISTS (" +
+                    // ...al menos una factura (f) cuyo cliente sea (c)
+                    "  SELECT f FROM Factura f WHERE f.cliente = c" +
+                    ")";
+            Query query = em.createQuery(jpql);
+            return query.getResultList();
+        }
+
+
+
     }
 }

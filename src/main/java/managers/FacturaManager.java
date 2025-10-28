@@ -174,5 +174,88 @@ public class FacturaManager {
     public void cerrarEntityManager(){
         em.close();
         emf.close();
+
+        // EJERCICIO 7: Listar los Artículos vendidos en una factura
+        public List<org.example.Articulo> getArticulosPorFactura(Long facturaId) {
+            String jpql = "SELECT fd.articulo FROM FacturaDetalle fd WHERE fd.factura.id = :facturaId";
+            Query query = em.createQuery(jpql);
+            query.setParameter("facturaId", facturaId);
+            return query.getResultList();
+        }
+
+        // EJERCICIO 8: Obtener el Artículo más caro vendido en una factura
+        public org.example.Articulo getArticuloMasCaroFactura(Long facturaId) {
+            String jpql = "SELECT fd.articulo FROM FacturaDetalle fd " +
+                    "WHERE fd.factura.id = :facturaId " +
+                    "ORDER BY fd.articulo.precioVenta DESC"; // Ordenamos por precio descendente
+
+            Query query = em.createQuery(jpql);
+            query.setParameter("facturaId", facturaId);
+            query.setMaxResults(1); // Tomamos solo el primer resultado
+
+            try {
+                // Usamos getSingleResult, pero puede lanzar NoResultException
+                return (org.example.Articulo) query.getSingleResult();
+            } catch (javax.persistence.NoResultException e) {
+                return null; // Retorna null si la factura no tiene artículos
+            }
+        }
+
+        // EJERCICIO 9: Contar la cantidad total de facturas generadas en el sistema
+        public Long countTotalFacturas() {
+            String jpql = "SELECT COUNT(f) FROM Factura f";
+            Query query = em.createQuery(jpql);
+            return (Long) query.getSingleResult();
+        }
+
+        // EJERCICIO 10: Listar las facturas cuyo total es mayor a un valor determinado
+        public List<Factura> getFacturasMayorA(Double montoMinimo) {
+            String jpql = "SELECT f FROM Factura f WHERE f.total > :montoMinimo";
+            Query query = em.createQuery(jpql);
+            query.setParameter("montoMinimo", montoMinimo);
+            return query.getResultList();
+        }
+
+        // EJERCICIO 11: Consultar las facturas que contienen un Artículo específico por nombre
+        public List<Factura> getFacturasPorNombreArticulo(String nombreArticulo) {
+            // Usamos DISTINCT para no repetir facturas si el artículo aparece varias veces
+            String jpql = "SELECT DISTINCT f FROM Factura f " +
+                    "JOIN f.detallesFactura fd " +
+                    "JOIN fd.articulo a " +
+                    "WHERE a.denominacion = :nombreArticulo";
+
+            Query query = em.createQuery(jpql);
+            query.setParameter("nombreArticulo", nombreArticulo);
+            return query.getResultList();
+        }
+
+        // EJERCICIO 12: Listar los Artículos filtrando por código parcial
+        public List<org.example.Articulo> getArticulosPorCodigoParcial(String codigoParcial) {
+            String jpql = "SELECT a FROM Articulo a WHERE a.codigo LIKE :codigoParcial";
+            Query query = em.createQuery(jpql);
+
+            // Añadimos los '%' para que LIKE busque "contiene"
+            query.setParameter("codigoParcial", "%" + codigoParcial + "%");
+            return query.getResultList();
+        }
+
+        // EJERCICIO 13: Listar Artículos cuyo precio sea mayor que el promedio
+        public List<org.example.Articulo> getArticulosPrecioMayorAlPromedio() {
+            // La subconsulta (SELECT AVG...) se ejecuta primero
+            String jpql = "SELECT a FROM Articulo a WHERE a.precioVenta > " +
+                    "(SELECT AVG(a2.precioVenta) FROM Articulo a2)";
+            Query query = em.createQuery(jpql);
+            return query.getResultList();
+        }
+
+        // Método auxiliar para mostrar el promedio en la consola (opcional pero útil)
+        public Double getPrecioPromedioArticulos() {
+            String jpql = "SELECT AVG(a.precioVenta) FROM Articulo a";
+            Query query = em.createQuery(jpql);
+            return (Double) query.getSingleResult();
+        }
+
+
+
     }
 }

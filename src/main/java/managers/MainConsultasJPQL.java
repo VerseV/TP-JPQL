@@ -26,6 +26,14 @@ public class MainConsultasJPQL {
         //mostrarMaximoNroFactura();
         //buscarClientesXIds();
         //buscarClientesXRazonSocialParcial();
+        //ejercicio7ArticulosPorFactura(1L);
+        //ejercicio8ArticuloMasCaroFactura(1L);
+        //ejercicio9ContarTotalFacturas();
+        //ejercicio10FacturasMayorA(50000.0);
+        //ejercicio11FacturasPorNombreArticulo("Coca Cola 2.25L");
+        //ejercicio12ArticulosPorCodigoParcial("A01");
+        //ejercicio13ArticulosPrecioMayorAlPromedio();
+        //ejercicio14ClientesConFacturasEXISTS();
         
     }
 
@@ -311,6 +319,176 @@ public class MainConsultasJPQL {
             System.out.println("Total: $" + FuncionApp.getFormatMilDecimal(fact.getTotal(),2));
             System.out.println("*************************");
         }
+
+        // EJERCICIO 7: Listar los Artículos vendidos en una factura
+        public static void ejercicio7ArticulosPorFactura(Long idFactura) {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 7: Artículos de la Factura ID " + idFactura + " ===");
+                List<org.example.Articulo> articulos = mFactura.getArticulosPorFactura(idFactura);
+
+                if (articulos.isEmpty()) {
+                    System.out.println("La factura no tiene artículos o no existe.");
+                } else {
+                    System.out.println("Artículos encontrados:");
+                    for (org.example.Articulo art : articulos) {
+                        // Asumo que Articulo tiene getDenominacion y getCodigo
+                        System.out.println("- " + art.getDenominacion() + " (Código: " + art.getCodigo() + ")");
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 8: Obtener el Artículo más caro vendido en una factura
+        public static void ejercicio8ArticuloMasCaroFactura(Long idFactura) {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 8: Artículo más caro de la Factura ID " + idFactura + " ===");
+                org.example.Articulo articulo = mFactura.getArticuloMasCaroFactura(idFactura);
+
+                if (articulo != null) {
+                    // Asumo que Articulo tiene getDenominacion y getPrecioVenta
+                    System.out.println("Artículo: " + articulo.getDenominacion());
+                    System.out.println("Precio: $" + articulo.getPrecioVenta());
+                } else {
+                    System.out.println("No se encontraron artículos para esa factura.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 9: Contar la cantidad total de facturas generadas en el sistema
+        public static void ejercicio9ContarTotalFacturas() {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 9: Cantidad Total de Facturas ===");
+                Long total = mFactura.countTotalFacturas();
+                System.out.println("Total de facturas en el sistema: " + total);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 10: Listar las facturas cuyo total es mayor a un valor determinado
+        public static void ejercicio10FacturasMayorA(Double monto) {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 10: Facturas con total mayor a $" + monto + " ===");
+                List<Factura> facturas = mFactura.getFacturasMayorA(monto);
+
+                if (facturas.isEmpty()) {
+                    System.out.println("No se encontraron facturas con un total mayor a $" + monto);
+                } else {
+                    mostrarFacturas(facturas); // Reutilizamos el método que ya tienes
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 11: Consultar las facturas que contienen un Artículo específico por nombre
+        public static void ejercicio11FacturasPorNombreArticulo(String nombre) {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 11: Facturas que contienen '" + nombre + "' ===");
+                List<Factura> facturas = mFactura.getFacturasPorNombreArticulo(nombre);
+
+                if (facturas.isEmpty()) {
+                    System.out.println("No se encontraron facturas con ese artículo.");
+                } else {
+                    mostrarFacturas(facturas);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 12: Listar los Artículos filtrando por código parcial
+        public static void ejercicio12ArticulosPorCodigoParcial(String codigo) {
+            // Usamos FacturaManager ya que ahí pusimos el método
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 12: Artículos con código que contiene '" + codigo + "' ===");
+                List<org.example.Articulo> articulos = mFactura.getArticulosPorCodigoParcial(codigo);
+
+                if (articulos.isEmpty()) {
+                    System.out.println("No se encontraron artículos.");
+                } else {
+                    System.out.println("Artículos encontrados:");
+                    for (org.example.Articulo art : articulos) {
+                        System.out.println("- " + art.getDenominacion() + " (Código: " + art.getCodigo() + ")");
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 13: Listar Artículos cuyo precio sea mayor que el promedio
+        public static void ejercicio13ArticulosPrecioMayorAlPromedio() {
+            FacturaManager mFactura = new FacturaManager(true);
+            try {
+                System.out.println("=== EJERCICIO 13: Artículos con precio mayor al promedio ===");
+
+                // Obtenemos el promedio para mostrarlo (opcional)
+                Double promedio = mFactura.getPrecioPromedioArticulos();
+                System.out.println(" (Promedio de precios: $" + String.format("%.2f", promedio) + ")");
+
+                List<org.example.Articulo> articulos = mFactura.getArticulosPrecioMayorAlPromedio();
+
+                if (articulos.isEmpty()) {
+                    System.out.println("No se encontraron artículos por encima del promedio.");
+                } else {
+                    System.out.println("Artículos encontrados:");
+                    for (org.example.Articulo art : articulos) {
+                        System.out.println("- " + art.getDenominacion() + " (Precio: $" + art.getPrecioVenta() + ")");
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mFactura.cerrarEntityManager();
+            }
+        }
+
+        // EJERCICIO 14: Ejemplo de EXISTS - Clientes con al menos una factura
+        public static void ejercicio14ClientesConFacturasEXISTS() {
+            // Este ejercicio usa ClienteManager
+            ClienteManager mCliente = new ClienteManager(true);
+            try {
+                System.out.println("=== EJERCICIO 14: Clientes con al menos una factura (usando EXISTS) ===");
+                List<org.example.Cliente> clientes = mCliente.getClientesConFacturasUsandoExists();
+
+                if (clientes.isEmpty()) {
+                    System.out.println("No se encontraron clientes con facturas.");
+                } else {
+                    System.out.println("Clientes encontrados:");
+                    for (org.example.Cliente cli : clientes) {
+                        System.out.println("- ID: " + cli.getId() + ", Razón Social: " + cli.getRazonSocial());
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                mCliente.cerrarEntityManager();
+            }
+        }
+
     }
 
 }
