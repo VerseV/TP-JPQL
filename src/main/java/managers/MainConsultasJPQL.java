@@ -26,6 +26,7 @@ public class MainConsultasJPQL {
         //mostrarMaximoNroFactura();
         //buscarClientesXIds();
         //buscarClientesXRazonSocialParcial();
+        
     }
 
     // EJERCICIO 1: Listar todos los clientes
@@ -97,6 +98,44 @@ public class MainConsultasJPQL {
             mFactura.cerrarEntityManager();
         }
     }
+
+    // EJERCICIO 5: Obtener las facturas de un cliente emitidas en los últimos 3 meses
+    public static void ejercicio5FacturasClienteUltimos3Meses(Long idCliente) {
+        FacturaManager mFactura = new FacturaManager(true);
+        try {
+            System.out.println("=== EJERCICIO 5: Facturas del Cliente en los Últimos 3 Meses ===");
+            List<Factura> facturas = mFactura.getFacturasClienteUltimos3Meses(idCliente);
+
+            if (facturas.isEmpty()) {
+                System.out.println("El cliente con ID " + idCliente + " no tiene facturas en los últimos 3 meses.");
+            } else {
+                for (Factura f : facturas) {
+                    System.out.println("Factura N° " + f.getNroComprobante() +
+                            " | Fecha: " + f.getFechaComprobante() +
+                            " | Total: $" + f.getTotal());
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mFactura.cerrarEntityManager();
+        }
+    }
+
+    // EJERCICIO 6: Calcular el total facturado por un cliente
+    public static void ejercicio6TotalFacturadoPorCliente(Long idCliente) {
+        FacturaManager mFactura = new FacturaManager(true);
+        try {
+            System.out.println("=== EJERCICIO 6: Total Facturado por Cliente ===");
+            Double total = mFactura.getTotalFacturadoPorCliente(idCliente);
+            System.out.println("Cliente con ID " + idCliente + " ha facturado un total de: $" + total);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            mFactura.cerrarEntityManager();
+        }
+    }
+
 
 
     public static void buscarFacturas(){
