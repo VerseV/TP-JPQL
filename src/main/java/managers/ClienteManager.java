@@ -69,20 +69,20 @@ public class ClienteManager {
     }
 
     public String parseSearchField(String field[], String value) {
-        if(value != null) {
+        if (value != null) {
             String[] values = value.split(" ");
             StringBuffer result = new StringBuffer();
 
-            for(int i = 0; i < values.length; i++) {
+            for (int i = 0; i < values.length; i++) {
 
                 StringBuffer resultFields = new StringBuffer();
 
-                if(!values[i].trim().equals("")){
+                if (!values[i].trim().equals("")) {
                     result.append(" AND ");
 
-                    for (int j = 0; j < field.length ; j++){
+                    for (int j = 0; j < field.length; j++) {
 
-                        if (j!=0)
+                        if (j != 0)
                             resultFields.append(" OR ");
 
                         resultFields.append(" (LOWER(" + field[j].trim() + ") LIKE '" + values[i].trim().toLowerCase() + "%' OR LOWER(" + field[j].trim() + ") LIKE '%" + values[i].trim().toLowerCase() + "%')");
@@ -95,9 +95,9 @@ public class ClienteManager {
         }
 
         return "";
-
+    }
         // EJERCICIO 14: Ejemplo de EXISTS - Clientes con al menos una factura
-        public List<org.example.Cliente> getClientesConFacturasUsandoExists() {
+        public List<org.example.Cliente> getClientesConFacturasUsandoExists () {
             // Seleccionamos clientes (c) donde EXISTA...
             String jpql = "SELECT c FROM Cliente c " +
                     "WHERE EXISTS (" +
@@ -110,5 +110,5 @@ public class ClienteManager {
 
 
 
-    }
 }
+

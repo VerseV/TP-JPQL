@@ -174,7 +174,7 @@ public class FacturaManager {
     public void cerrarEntityManager(){
         em.close();
         emf.close();
-
+}
         // EJERCICIO 7: Listar los Artículos vendidos en una factura
         public List<org.example.Articulo> getArticulosPorFactura(Long facturaId) {
             String jpql = "SELECT fd.articulo FROM FacturaDetalle fd WHERE fd.factura.id = :facturaId";
@@ -257,5 +257,5 @@ public class FacturaManager {
 
 
 
-    }
 }
+

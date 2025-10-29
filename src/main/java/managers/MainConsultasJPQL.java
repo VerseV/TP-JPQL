@@ -488,7 +488,6 @@ public class MainConsultasJPQL {
                 mCliente.cerrarEntityManager();
             }
         }
-
-    }
-
 }
+
+
