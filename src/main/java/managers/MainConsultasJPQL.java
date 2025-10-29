@@ -13,27 +13,27 @@ import java.util.List;
 public class MainConsultasJPQL {
 
     public static void main(String[] args) {
-        //REPOSITORIO-> https://github.com/gerardomagni/jpqlquerys.git
 
-        //buscarFacturas();
-        //buscarFacturasActivas();
-        //buscarFacturasXNroComprobante();
-        //buscarFacturasXRangoFechas();
-        //buscarFacturaXPtoVentaXNroComprobante();
-        //buscarFacturasXCliente();
-        //buscarFacturasXCuitCliente();
-        //buscarFacturasXArticulo();
-        //mostrarMaximoNroFactura();
-        //buscarClientesXIds();
-        //buscarClientesXRazonSocialParcial();
-        //ejercicio7ArticulosPorFactura(1L);
-        //ejercicio8ArticuloMasCaroFactura(1L);
-        //ejercicio9ContarTotalFacturas();
-        //ejercicio10FacturasMayorA(50000.0);
-        //ejercicio11FacturasPorNombreArticulo("Coca Cola 2.25L");
-        //ejercicio12ArticulosPorCodigoParcial("A01");
-        //ejercicio13ArticulosPrecioMayorAlPromedio();
-        //ejercicio14ClientesConFacturasEXISTS();
+
+        buscarFacturas();
+        buscarFacturasActivas();
+        buscarFacturasXNroComprobante();
+        buscarFacturasXRangoFechas();
+        buscarFacturaXPtoVentaXNroComprobante();
+        buscarFacturasXCliente();
+        buscarFacturasXCuitCliente();
+        buscarFacturasXArticulo();
+        mostrarMaximoNroFactura();
+        buscarClientesXIds();
+        buscarClientesXRazonSocialParcial();
+        ejercicio7ArticulosPorFactura(1L);
+        ejercicio8ArticuloMasCaroFactura(1L);
+        ejercicio9ContarTotalFacturas();
+        ejercicio10FacturasMayorA(50000.0);
+        ejercicio11FacturasPorNombreArticulo("Coca Cola 2.25L");
+        ejercicio12ArticulosPorCodigoParcial("A01");
+        ejercicio13ArticulosPrecioMayorAlPromedio();
+        ejercicio14ClientesConFacturasEXISTS();
 
     }
 
