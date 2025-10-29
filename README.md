@@ -1,4 +1,10 @@
-Comenzamos a estudiar JPA y la implementación con Hibernate. (Proyecto de base )
-1- Descargar el proyecto
-2- Abrir en Intelligent Idea Community
-3 - Este Proyecto utiliza gradle y la base de dato H2 en memoria para simplificar
+# TP - Consultas en JPQL en Java
+
+## Grupo N°7
+- Victoria Acosta
+- Adriel Espejo
+- Paula Bomprezzi
+- Martin Ladino
+- Mateo Espinola
+- Eduardo Espinola
+- Matilde Funes
